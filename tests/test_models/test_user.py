@@ -1,34 +1,34 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""test user"""
 from models.user import User
+from tests.test_models.test_base_model import test_basemodel
 
 
 class test_User(test_basemodel):
-    """ """
+    """ test user"""
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ init """
         super().__init__(*args, **kwargs)
         self.name = "User"
         self.value = User
 
     def test_first_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.first_name), str)
+        """test first name """
+        new_fn = self.value()
+        self.assertEqual(type(new_fn.first_name), str)
 
     def test_last_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.last_name), str)
+        """testing last name """
+        new_ln = self.value()
+        self.assertEqual(type(new_ln.last_name), str)
 
     def test_email(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.email), str)
+        """test email """
+        new_email = self.value()
+        self.assertEqual(type(new_email.email), str)
 
     def test_password(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        """ testing password"""
+        new_pwd = self.value()
+        self.assertEqual(type(new_pwd.password), str)
