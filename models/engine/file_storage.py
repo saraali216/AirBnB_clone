@@ -46,3 +46,5 @@ class FileStorage:
                     self.all()[i] = classes[j['__class__']](**j)
         except FileNotFoundError:
             pass
+        except Exception as e:
+            pass
