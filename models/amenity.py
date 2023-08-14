@@ -3,6 +3,7 @@
     The `amenity` module"""
 from models.base_model import BaseModel
 
+
 class Amenity(BaseModel):
     """Amenity() is a sub-class of "BaseModul()
         Provided by place or house

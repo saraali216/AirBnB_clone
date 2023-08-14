@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
+""" Module State"""
 from models.base_model import BaseModel
 
 
