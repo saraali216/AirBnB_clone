@@ -28,8 +28,8 @@ class test_basemodel(unittest.TestCase):
         new_id = self.value()
         self.assertEqual(type(new_id.id), str)
 
-    def setUp (self)
-        """setup"""
+    def setUp(self)
+        """setup environement"""
         pass
 
     def test_default(self):
@@ -64,8 +64,8 @@ class test_basemodel(unittest.TestCase):
     def test_str(self):
         """ testing the str """
         tstr = self.value()
-        self.assertEqual(str(tstr), '[{}] ({}) {}'.format(self.name, tstr.id,
-                         tstr.__dict__))
+        self.assertEqual(str(tstr), '[{}] ({}) {}'.format(self.name,
+                         tstr.id, tstr.__dict__))
 
     def test_todict(self):
         """ test to distionary """
