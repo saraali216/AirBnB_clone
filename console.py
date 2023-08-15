@@ -289,7 +289,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** value missing **")
                     return
                 if attribute_name in HBNBCommand.types:
-                    attribute_val = HBNBCommand.types[attribute_name](attribute_val)
+                 attribute_val = HBNBCommand.types[attribute_name](attribute_val)
 
                 new_dict.__dict__.update({attribute_name: attribute_val})
         # saves updates
