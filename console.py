@@ -5,7 +5,7 @@ import cmd
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
-from models.state  import State
+from models.state import State
 from models.place import Place
 from models.city import City
 from models.amenity import Amenity
@@ -40,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
         """
-        #initiate line elements
+        # initiate line elements
         _cmds = _cls = _id = _args = ''
 
         # scanning for general format - i.e '.', '(', ')'
@@ -58,10 +58,10 @@ class HBNBCommand(cmd.Cmd):
             xline = xline[xline.find('(') + 1:xline.find(')')]
 
             if xline:
-                #xline converts to tuple
+                # xline converts to tuple
                 xline = xline.partition(', ')
 
-                #stripping quotes and isolate _id
+                # stripping quotes and isolate _id
                 _id = xline[0].replace('\"', '')
 
                 xline = xline[2].strip()
@@ -233,8 +233,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
             return
-        
-        #if class name is invalid
+
+        # if class name is invalid
         if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
@@ -255,7 +255,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance key found **")
             return
 
-        if '{' in args[2] and '}' in args[2] and type(eval(args[2])) ==dict:
+        if '{' in args[2] and '}' in args[2] and type(eval(args[2])) == dict:
             kwargs = eval(args[2])
             args = []
             for i, j in kwargs.items():
@@ -263,8 +263,8 @@ class HBNBCommand(cmd.Cmd):
                 args.append(j)
         else:
             args = args[2]
-            #checks the quoted arg
-            if args and args[0] =='\"':
+            # checks the quoted arg
+            if args and args[0] == '\"':
                 scnd_quote = args.find('\"', 1)
                 attribute_name = args[1:scnd_quote]
                 args = args[scnd_quote + 1:]
@@ -292,7 +292,7 @@ class HBNBCommand(cmd.Cmd):
                     attribute_val = HBNBCommand.types[attribute_name](attribute_val)
 
                 new_dict.__dict__.update({attribute_name: attribute_val})
-        #saves updates
+        # saves updates
         new_dict.save()
 
     def help_update(self):
