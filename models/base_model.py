@@ -24,6 +24,7 @@ class BaseModel:
                         self.create_atime = datetime.fromisoformat(w)
                     else:
                         setattr(self, k, w)
+
     def __str__(self):
         """Returns a string represents the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
@@ -40,7 +41,7 @@ class BaseModel:
         dictio = {}
         dictio.update(self.__dict__)
         dictio.update({'__class__':
-                (str(type(self)).split('.')[-1]).split('\'')[0]})
+                      (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictio['updated_atime'] = self.updated_atime.isoformat()
         dictio['created_atime'] = self.created_atime.isoformat()
         return dictio

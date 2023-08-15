@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 
 class Place(BaseModel):
     """A place or house in the app """
-    name=""
+    name = ""
     city_id = ""
     user_id = ""
     amenity_ids = []

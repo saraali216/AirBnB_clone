@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-""" State Module for HBNB project 
-    The `amenity` module"""
+""" State Module for HBNB project
+The `amenity` module"""
 from models.base_model import BaseModel
 
 
