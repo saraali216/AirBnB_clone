@@ -24,6 +24,7 @@ class FileStorage:
 
     def save(self):
         """Saves the storage dictionary into file"""
+        from models import BaseModel
         with open(FileStorage.__file_path, 'w') as f:
             tmp = {}
             tmp.update(FileStorage.__objects)
