@@ -28,7 +28,7 @@ class test_basemodel(unittest.TestCase):
         new_id = self.value()
         self.assertEqual(type(new_id.id), str)
 
-    def setUp(self)
+    def setUp(self):
         """setup environement"""
         pass
 
