@@ -255,7 +255,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance key found **")
             return
 
-        if '{' in args[2] and '}' in args[2] and type(eval(args[2])) is dict:
+        if '{' in args[2] and '}' in args[2] and type(eval(args[2])) ==dict:
             kwargs = eval(args[2])
             args = []
             for i, j in kwargs.items():
@@ -264,14 +264,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = args[2]
             #checks the quoted arg
-            if args and args[0] is '\"':
+            if args and args[0] =='\"':
                 scnd_quote = args.find('\"', 1)
                 attribute_name = args[1:scnd_quote]
                 args = args[scnd_quote + 1:]
             args = args.partition(' ')
-            if not attribute_name and args[0] is not ' ':
+            if not attribute_name and args[0] != ' ':
                 attribute_name = args[0]
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 attribute_val = args[2][1:args[2].find('\"', 1)]
 
             if not attribute_val and args[2]:
