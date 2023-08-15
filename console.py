@@ -66,8 +66,8 @@ class HBNBCommand(cmd.Cmd):
 
                 xline = xline[2].strip()
                 if xline:
-                    if xline[0] is '{' and xline[-1] is '}'\
-                            and type(eval(xline)) is dict:
+                    if xline[0] == '{' and xline[-1] == '}'\
+                            and type(eval(xline)) == dict:
                         _args = xline
                     else:
                         _args = xline.replace(',', '')
