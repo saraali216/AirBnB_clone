@@ -224,7 +224,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, args):
         """ Updates a certain object """
-        class_name = class_id = attribute_name = attribute_val = kwargs = ''
+        class_name = class_id = attrb_name = attrb_val = kwargs = ''
 
         # isolates cls from id or args,e.g:(<cls>, delim, <id/args>)
         args = args.partition(" ")
@@ -266,32 +266,32 @@ class HBNBCommand(cmd.Cmd):
             # checks the quoted arg
             if args and args[0] == '\"':
                 scnd_quote = args.find('\"', 1)
-                attribute_name = args[1:scnd_quote]
+                attrb_name = args[1:scnd_quote]
                 args = args[scnd_quote + 1:]
             args = args.partition(' ')
-            if not attribute_name and args[0] != ' ':
-                attribute_name = args[0]
+            if not attrb_name and args[0] != ' ':
+                attrb_name = args[0]
             if args[2] and args[2][0] == '\"':
-                attribute_val = args[2][1:args[2].find('\"', 1)]
+                attrb_val = args[2][1:args[2].find('\"', 1)]
 
-            if not attribute_val and args[2]:
-                attribute_val = args[2].partition(' ')[0]
-            args = [attribute_name, attribute_val]
+            if not attrb_val and args[2]:
+                attrb_val = args[2].partition(' ')[0]
+            args = [attrb_name, attrb_val]
         new_dict = storage.all()[key]
 
-        for i, attribute_name in enumerate(args):
+        for i, attrb_name in enumerate(args):
             if (i % 2 == 0):
-                attribute_val = args[i + 1]
-                if not attribute_name:
+                attrb_val = args[i + 1]
+                if not attrb_name:
                     print("** attribute name missing **")
                     return
-                if not attribute_val:
+                if not attrb_val:
                     print("** value missing **")
                     return
-                if attribute_name in HBNBCommand.types:
-                 attribute_val = HBNBCommand.types[attribute_name](attribute_val)
+                if attrb_name in HBNBCommand.types:
+                 attrb_val = HBNBCommand.types[attrb_name](attrb_val)
 
-                new_dict.__dict__.update({attribute_name: attribute_val})
+                new_dict.__dict__.update({attrb_name: attrb_val})
         # saves updates
         new_dict.save()
 
