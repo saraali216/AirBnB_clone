@@ -31,6 +31,7 @@ class BaseModel:
 
     def save(self):
         """Updates update_atime with current time when smthg changes"""
+        from models import BaseModel
         self.updated_atime = datetime.now()
         storage.save()
 
