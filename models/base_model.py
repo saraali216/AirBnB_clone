@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """***************** This is the  base class for all models *************"""
 import uuid
+from models.base_model import BaseModel
+from base_model import BaseModel
 from datetime import datetime
 import models
 from models import storage

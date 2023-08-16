@@ -1,100 +1,58 @@
 #!/usr/bin/python3
-""" test base_model """
+"""testing on my base model"""
 import unittest
-import json
-import os
 from models.base_model import BaseModel
-import datetime
-from uuid import UUID
+from datetime import datetime
+from models import storage
 
 
-class test_basemodel(unittest.TestCase):
-    """ testing base module """
-
-    def __init__(self, *args, **kwargs):
-        """init """
-        super().__init__(*args, **kwargs)
-        self.name = 'BaseModel'
-        self.value = BaseModel
-
-    def delete_storage_file(self):
-        try:
-            os.remove('file.json')
-        except FileNotFoundError:
-            pass
-
-    def test_id(self):
-        """test id """
-        new_id = self.value()
-        self.assertEqual(type(new_id.id), str)
-
-    def setUp(self):
-        """setup environement"""
-        pass
-
-    def test_default(self):
-        """default testing """
-        tdf = self.value()
-        self.assertEqual(type(tdf), self.value)
-
-    def test_kwargs(self):
-        """test kwargs """
-        tkwa = self.value()
-        copy = tkwa.to_dict()
-        new = BaseModel(**copy)
-        self.assertFalse(new is tkwa)
-
-    def test_kwargs_int(self):
-        """ testing kwargs int"""
-        tkwai = self.value()
-        copy = tkwai.to_dict()
-        copy.update({1: 2})
-        with self.assertRaises(TypeError):
-            new = BaseModel(**copy)
+class TestBaseModel(unittest.TestCase):
+    """test class for max_integer """
+    my_model = BaseModel()
+    my_model.name = "My First Model"
+    my_model.my_number = 89
 
     def test_save(self):
-        """ testing save """
-        ts = self.value()
-        ts.save()
-        key = self.name + "." + ts.id
-        with open('file.json', 'r') as f:
-            i = json.load(f)
-            self.assertEqual(i[key], ts.to_dict())
+        """"testing the save class method """
+        bf_up_time = self.my_mdl.updated_at
+        self.my_mdl.my_number = 90
+        self.my_model.save()
+        af_up_time = self.my_mdl.updated_at
+        self.assertNotEqual(bfe_up_time, af_up_time)
 
     def test_str(self):
-        """ testing the str """
-        tstr = self.value()
-        self.assertEqual(str(tstr), '[{}] ({}) {}'.format(self.name,
-                         tstr.id, tstr.__dict__))
+        """check for string representaion"""
+        xstr = self.my_mdl.__class__.__name__
+        expctd_str = f"[{xstr}] ({self.my_mdl.id}) <{self.my_mdl.__dict__}>"
+        self.assertEqual(self.my_mdl.__str__(), expctd_str)
 
-    def test_todict(self):
-        """ test to distionary """
-        ttdic = self.value()
-        n = ttdic.to_dict()
-        self.assertEqual(ttdic.to_dict(), n)
+    def test_create_instance_without_kwargs(self):
+        """creating instance of class without kwargs"""
+        self.assertIsInstance(self.my_mdl, BaseModel)
+        self.assertIsInstance(self.my_mdl.id, str)
+        self.assertIsInstance(self.my_mdl.created_at, datetime)
+        self.assertIsInstance(self.my_mdl.updated_at, datetime)
+        self.assertEqual(self.my_mdl.name, "My First Model")
+        self.assertEqual(self.my_mdl.my_number, 89)
 
-    def test_kwargs_none(self):
-        """test no kwargs ?"""
-        x = {None: None}
-        with self.assertRaises(TypeError):
-            new = self.value(**x)
+    def test_create_instance_with_kwargs(self):
+        """ creating instance of class with kwargs """
+        my_json = self.my_mdl.to_dict()
+        new_basemodel = BaseModel(**my_json)
+        self.assertIsInstance(new_basemodel, BaseModel)
+        self.assertIsInstance(new_basemodel.id, str)
+        self.assertIsInstance(new_basemodel.created_at, datetime)
+        self.assertIsInstance(new_basemodel.updated_at, datetime)
+        self.assertEqual(new_basemodel.name, "My First Model")
+        self.assertEqual(new_basemodel.my_number, 89)
+        self.assertNotEqual(new_basemodel, self.my_mdl)
+        self.assertDictEqual(new_basemodel.__dict__, self.my_mdl.__dict__)
 
-    def test_kwargs_one(self):
-        """test kwargs one """
-        x = {'Name': 'test'}
-        with self.assertRaises(KeyError):
-            new = self.value(**x)
-
-    def test_created_attribute(self):
-        """test created attribute"""
-        new_att = self.value()
-        self.assertEqual(type(new_att.created_attribute), datetime.datetime)
-
-    def test_updated_attribute(self):
-        """test updated attribute """
-        new_att = self.value()
-        self.assertEqual(type(new_att.updated_at), datetime.datetime)
-        n = new_att.to_dict()
-        new_att = BaseModel(**n)
-        self.assertFalse(new_att.created_attribute ==
-                         new_att.updated_attribute)
+    def test_to_dict(self):
+        """ test to_dict class method """
+        to_dict_rtrnd_dict = self.my_mdl.to_dict()
+        expctd_dic = self.my_mdl.__dict__.copy()
+        expctd_dic["__class__"] = self.my_mdl.__class__.__name__
+        expctd_dic["updated_at"] = self.my_mdl.updated_at.isoformat()
+        expctd_dic["created_at"] = self.my_mdl.created_at.isoformat()
+        self.assertDictEqual(expctd_dic, to_dict_rtrnd_dict)
