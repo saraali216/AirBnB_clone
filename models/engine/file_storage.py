@@ -10,11 +10,15 @@ from models.amenity import Amenity
 from models.review import Review
 
 
+classes = {"BaseModel": BaseModel, "User": User, "City": City,
+           "Place": Place, "Amenity": Amenity, "Review": Review,
+           "State": State}
+
+
 class FileStorage:
     """ This class file_storage-JSON"""
-    classes = {"BaseModel": BaseModel, "User": User, "City": City,
-           "Place": Place, "Amenity": Amenity, "Review": Review, "State": State}
-def __init__(self):
+
+    def __init__(self):
         """string path to file JSON"""
         self.__file_path = 'file.json'
         self.__objects = {}
