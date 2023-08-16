@@ -11,42 +11,35 @@ from models.review import Review
 
 
 class FileStorage:
-    """This class manages storage in JSON"""
-    __file_path = 'file.json'
-    __objects = {}
+    """ This class file_storage-JSON"""
+    classes = {"BaseModel": BaseModel, "User": User, "City": City,
+           "Place": Place, "Amenity": Amenity, "Review": Review, "State": State}
+def __init__(self):
+        """string path to file JSON"""
+        self.__file_path = 'file.json'
+        self.__objects = {}
 
     def all(self):
-        """Returns all objects in BaseModel class"""
-        return FileStorage.__objects
-
-    def new(self, obj):
-        """Adds new object"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        """returns the dictionary of __objects"""
+        return self.__objects
 
     def save(self):
-        """Saves the storage dictionary into file"""
-        from models import BaseModel
-        with open(FileStorage.__file_path, 'w') as f:
-            tmp = {}
-            tmp.update(FileStorage.__objects)
-            for i, j in tmp.items():
-                tmp[i] = j.to_dict()
-            json.dump(tmp, f)
+        """ serializes __objects to JSON"""
+        new_dict = {}
+        with open(self.__file_path, 'w', encoding="UTF-8") as filejson:
+            for i, v in self.__objects.items():
+                new_dict[i] = v.to_dict()
+            filejson.write(json.dumps(new_dict))
+
+    def new(self, obj):
+        """sets related to the __objects"""
+        mn_obj = obj.__class__.__name__ + '.' + obj.id
+        self.__objects.update({mn_obj: obj})
 
     def reload(self):
-        """Deserializes the JSON objects in file.json"""
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
-        try:
-            tmp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                tmp = json.load(f)
-                for i, j in tmp.items():
-                    self.all()[i] = classes[j['__class__']](**j)
-        except FileNotFoundError:
-            pass
-        except Exception as e:
-            pass
+        """ parsing the JSON file to __objects"""
+        if os.path.isfile(self.__file_path):
+            with open(self.__file_path) as json_f:
+                other_dict_objs = json.load(json_f)
+            for i, v in other_dict_objs.items():
+                self.__objects[i] = eval(v["__class__"])(**v)
