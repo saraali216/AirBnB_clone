@@ -6,6 +6,5 @@ from models.base_model import BaseModel
 
 class Amenity(BaseModel):
     """Amenity() is a sub-class of "BaseModul()
-        Provided by place or house
-    """
+        Provided by place or house"""
     name = ""
